@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:Class="ScrollViewerPenBugRepro.MainWindow"
+        Title="ScrollViewer + Pen Regression Repro"
+        Width="800" Height="600">
+
+    <DockPanel>
+        <!-- Status bar showing pointer events -->
+        <Border DockPanel.Dock="Top" Background="#333" Padding="8">
+            <StackPanel Orientation="Horizontal" Spacing="16">
+                <TextBlock Name="StatusText" Foreground="White" Text="Draw on the canvas below with a tablet pen" />
+                <TextBlock Name="EventLog" Foreground="#0f0" Text="" />
+                <TextBlock Name="VersionText" Foreground="#ff0" Text="" />
+            </StackPanel>
+        </Border>
+
+        <Border DockPanel.Dock="Bottom" Background="#333" Padding="8">
+            <TextBlock Foreground="#aaa" Text="BUG: On Avalonia 11.3.7+, tablet pen drawing inside ScrollViewer causes unwanted panning. Change AvaloniaVersion in .csproj to 11.3.6 to verify fix." />
+        </Border>
+
+        <!-- ScrollViewer containing a large canvas - mimics Scribble's layout -->
+        <ScrollViewer Name="CanvasScrollViewer"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto">
+            <Canvas Name="DrawingCanvas"
+                    Width="2000" Height="2000"
+                    Background="White"
+                    PointerPressed="OnCanvasPointerPressed"
+                    PointerMoved="OnCanvasPointerMoved"
+                    PointerReleased="OnCanvasPointerReleased" />
+        </ScrollViewer>
+    </DockPanel>
+</Window>
